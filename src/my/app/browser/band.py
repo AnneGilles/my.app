@@ -71,13 +71,8 @@ class BandAddForm(BandForm, Form):
         add_band(self.request,
                  self.model,
                  data.fetch('bandform.title').extracted,
-                 data.fetch('bandform.description').extracted,
-                 data.fetch('bandform.resource').extracted,
-                 data.fetch('bandform.account').extracted,
-                 data.fetch('bandform.estimated').extracted,
-                 data.fetch('bandform.beginning').extracted,
-                 data.fetch('bandform.duedate').extracted)
-
+                 data.fetch('bandform.description').extracted
+                 )
 
 @tile('editform', interface=Band, permission="edit")
 class BandEditForm(BandForm, Form):
@@ -89,8 +84,4 @@ class BandEditForm(BandForm, Form):
                     self.model,
                     data.fetch('bandform.title').extracted,
                     data.fetch('bandform.description').extracted,
-                    data.fetch('bandform.resource').extracted,
-                    data.fetch('bandform.account').extracted,
-                    data.fetch('bandform.estimated').extracted,
-                    data.fetch('bandform.beginning').extracted,
-                    data.fetch('bandform.duedate').extracted)
+                    )
