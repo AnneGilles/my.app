@@ -6,6 +6,8 @@ from my.app.model import (
     Track,
 )
 
+from pyramid.view import static
+static_view = static('static')
 
 registerTile('content',
              'cone.app:browser/templates/listing.pt',
