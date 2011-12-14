@@ -13,12 +13,6 @@ class MyApp(BaseNode):
 
     node_info_name = 'myapp'
 
-    def __init__(self, name=None, parent=None):
-        self.__name__ = name
-        self.__parent__ = parent
-        for i in range(3):  # make 3 bands
-            self[str(i)] = Band()
-
     @property
     def properties(self):
         props = Properties()
@@ -48,12 +42,6 @@ class Band(BaseNode):
 
     node_info_name = 'band'
 
-    def __init__(self, name=None, parent=None):
-        self.__name__ = name
-        self.__parent__ = parent
-        for i in range(2):  # two tracks each
-            self[str(i)] = Track()
-
     @property
     def properties(self):
         props = Properties()
@@ -66,20 +54,26 @@ class Band(BaseNode):
     @property
     def metadata(self):
         md = BaseMetadata()
-        #md.title = 'Band: %s' % self.name
         md.title = self.attrs.get('title')
+        md.description = self.attrs.get('description')
+        md.uid = self.attrs.get('uuid')
+        md.creator = self.attrs.get('creator')
+        md.created = self.attrs.get('created')
+        md.modified = self.attrs.get('modified')
         return md
 
 info = NodeInfo()
 info.title = 'Band'
 info.description = 'This is a band'
 info.addables = ['track']
-#info.icon = 'url/to/icon'
+#info.icon = 'static/B16_16.png'
 info.node = Band
 registerNodeInfo('band', info)
 
 
 class Track(BaseNode):
+    __metaclass__ = plumber
+    __plumbing__ = UUIDAttributeAware
 
     node_info_name = 'track'
 
@@ -95,13 +89,18 @@ class Track(BaseNode):
     @property
     def metadata(self):
         md = BaseMetadata()
-        md.title = 'Track: %s' % self.name
+        md.title = self.attrs.get('title')
+        md.description = self.attrs.get('description')
+        md.uid = self.attrs.get('uuid')
+        md.creator = self.attrs.get('creator')
+        md.created = self.attrs.get('created')
+        md.modified = self.attrs.get('modified')
         return md
 
 info = NodeInfo()
 info.title = 'Track'
 info.description = 'This is a track'
 info.addables = []
-#info.icon = 'url/to/icon'
+#info.icon = 'static/T16_16.png'
 info.node = Track
 registerNodeInfo('track', info)
