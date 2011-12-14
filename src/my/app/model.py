@@ -1,9 +1,11 @@
+from plumber import plumber
 from cone.app.model import (
     BaseNode,
     Properties,
     BaseMetadata,
     NodeInfo,
-    registerNodeInfo
+    registerNodeInfo,
+    UUIDAttributeAware
     )
 
 
@@ -14,9 +16,9 @@ class MyApp(BaseNode):
     def __init__(self, name=None, parent=None):
         self.__name__ = name
         self.__parent__ = parent
-        for i in range(10):
+        for i in range(3):  # make 3 bands
             self[str(i)] = Band()
-    
+
     @property
     def properties(self):
         props = Properties()
@@ -24,7 +26,7 @@ class MyApp(BaseNode):
         props.action_list = True
         props.action_add = True
         return props
-    
+
     @property
     def metadata(self):
         md = BaseMetadata()
@@ -41,13 +43,15 @@ registerNodeInfo('myapp', info)
 
 
 class Band(BaseNode):
+    __metaclass__ = plumber
+    __plumbing__ = UUIDAttributeAware
 
     node_info_name = 'band'
-    
+
     def __init__(self, name=None, parent=None):
         self.__name__ = name
         self.__parent__ = parent
-        for i in range(10):
+        for i in range(2):  # two tracks each
             self[str(i)] = Track()
 
     @property
@@ -58,11 +62,12 @@ class Band(BaseNode):
         props.action_add = True
         props.action_edit = True
         return props
-    
+
     @property
     def metadata(self):
         md = BaseMetadata()
-        md.title = 'Band: %s' % self.name
+        #md.title = 'Band: %s' % self.name
+        md.title = self.attrs.get('title')
         return md
 
 info = NodeInfo()
@@ -86,7 +91,7 @@ class Track(BaseNode):
         props.action_add = True
         props.action_edit = True
         return props
-    
+
     @property
     def metadata(self):
         md = BaseMetadata()
