@@ -17,7 +17,6 @@ from cone.app.browser.authoring import (
 from my.app.model import (
         Band,
     )
-#from my.band.browser.utils import myapp_resource_vocab
 
 
 @tile('content', 'templates/band.pt', interface=Band,
@@ -61,6 +60,11 @@ class BandForm(object):
 
     form_template = 'my.app.browser:forms/band.yaml'
 
+from cone.app.utils import (
+    add_creation_metadata,
+    update_creation_metadata,
+    )
+
 
 @tile('addform', interface=Band, permission="add")
 class BandAddForm(BandForm, Form):
@@ -68,11 +72,19 @@ class BandAddForm(BandForm, Form):
     __plumbing__ = AddPart
 
     def save(self, widget, data):
-        add_band(self.request,
-                 self.model,
-                 data.fetch('bandform.title').extracted,
-                 data.fetch('bandform.description').extracted
-                 )
+        #print "BandAddForm: trying to save form data"
+        print "setting self.model.__name__ = 'foo'"
+        self.model.__name__ = 'foo'
+        #print "setting self.model to be parent of self.model.name"
+        import uuid
+        self.model.parent[str(uuid.uuid4())] = self.model
+        #print "setting attr title: " + data.fetch('bandform.title').extracted
+        self.model.attrs['title'] = data.fetch('bandform.title').extracted
+        #print "setting attr description: " + data.fetch(
+        #    'bandform.description').extracted
+        self.model.attrs['description'] = data.fetch(
+            'bandform.description').extracted
+
 
 @tile('editform', interface=Band, permission="edit")
 class BandEditForm(BandForm, Form):
@@ -80,8 +92,10 @@ class BandEditForm(BandForm, Form):
     __plumbing__ = EditPart
 
     def save(self, widget, data):
-        update_band(self.request,
-                    self.model,
-                    data.fetch('bandform.title').extracted,
-                    data.fetch('bandform.description').extracted,
-                    )
+        #print "BandEditForm: trying to save form data"
+        #print "title: " + data.fetch('bandform.title').extracted
+        #print "descr: " + data.fetch('bandform.description').extracted
+        self.model.attrs['title'] = data.fetch('bandform.title').extracted
+        self.model.attrs['description'] = data.fetch(
+            'bandform.description').extracted
+        update_creation_metadata(self.request, self.model.attrs)
