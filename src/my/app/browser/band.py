@@ -76,8 +76,7 @@ class BandAddForm(BandForm, Form):
         print "setting self.model.__name__ = 'foo'"
         self.model.__name__ = 'foo'
         #print "setting self.model to be parent of self.model.name"
-        import uuid
-        self.model.parent[str(uuid.uuid4())] = self.model
+        self.model.parent[str(self.model.uuid)] = self.model
         #print "setting attr title: " + data.fetch('bandform.title').extracted
         self.model.attrs['title'] = data.fetch('bandform.title').extracted
         #print "setting attr description: " + data.fetch(
