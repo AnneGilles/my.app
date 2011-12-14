@@ -6,13 +6,13 @@ props:
 widgets:
 - title:
     factory: field:label:error:text
-#    value: expr:context.metadata.title
+    value: expr:context.model.attrs.get('title', '')
     props: 
       label: Band title
       required: No band title given
 - description:
     factory: field:label:error:textarea
-#    value: expr:context.model.metadata.description
+    value: expr:context.model.attrs.get('description', '')
     props: 
       label: Band description
       rows: 5
