@@ -1,0 +1,35 @@
+factory: form
+name: trackform
+props:
+  action: context.form_action
+  class: ajax
+widgets:
+- title:
+    factory: field:label:error:text
+    value: expr:context.model.attrs.get('title', '')
+    props: 
+      label: Track title
+      required: No track title given
+- description:
+    factory: field:label:error:textarea
+    value: expr:context.model.attrs.get('description', '')
+    props: 
+      label: Track description
+      rows: 5
+- save:
+    factory: submit
+    props:
+      action: save
+      expression: True
+      handler: context.save
+      next: context.next
+      label: Save
+- cancel:
+    factory: submit
+    props:
+      action: cancel
+      expression: True
+      handler: None
+      next: context.next
+      label: Cancel
+      skip: True
