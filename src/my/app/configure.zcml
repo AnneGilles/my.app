@@ -4,4 +4,10 @@
   <include package="pyramid_zcml"/>
   <scan package=".browser" />
 
+  <view
+    for="*"
+    view=".browser.static_view"
+    name="myapp-static"
+  />
+
 </configure>
