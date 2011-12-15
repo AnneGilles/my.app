@@ -18,33 +18,6 @@ from my.app.model import (
     )
 
 
-@tile('content', 'templates/track.pt', interface=Track,
-      permission='login', strict=False)
-class TrackTile(ProtectedContentTile):
-
-    @property
-    def estimated(self):
-        return '%.2f h' % self.model.metadata.estimated
-
-    @property
-    def resource(self):
-        resource = self.model.metadata.resource
-        if not resource:
-            return []
-        if isinstance(resource, basestring):
-            return [resource]
-        return resource
-
-    @property
-    def account(self):
-        account = self.model.metadata.account
-        if not account:
-            return []
-        if isinstance(account, basestring):
-            return [account]
-        return account
-
-
 class TrackForm(object):
     __metaclass__ = plumber
     __plumbing__ = YAMLForm
