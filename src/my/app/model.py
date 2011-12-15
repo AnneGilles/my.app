@@ -66,7 +66,7 @@ info = NodeInfo()
 info.title = 'Band'
 info.description = 'This is a band'
 info.addables = ['track']
-#info.icon = 'static/B16_16.png'
+info.icon = 'myapp-static/B16_16.png'
 info.node = Band
 registerNodeInfo('band', info)
 
@@ -101,6 +101,6 @@ info = NodeInfo()
 info.title = 'Track'
 info.description = 'This is a track'
 info.addables = []
-#info.icon = 'static/T16_16.png'
+info.icon = 'myapp-static/T16_16.png'
 info.node = Track
 registerNodeInfo('track', info)
